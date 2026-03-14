@@ -1,34 +1,31 @@
-import React from 'react'
-import { navbarStyles } from '../assets/dummystyles'
-import { Link } from 'react-router-dom'
-
-const Navbar = () => {
-    return (
-        <nav className={navbarStyles.nav}>
-            <div 
-            style={{
-                backgroundImage: navbarStyles.decorativePattern,
-            }}
-            className={navbarStyles.decorativePattern}
-            ></div>
-
-            <div className={navbarStyles.bubble1}></div>
-            <div className={navbarStyles.bubble2}></div>
-            <div className={navbarStyles.bubble3}></div>
-
-
-            <div className={navbarStyles.container}>
-                <div className={navbarStyles.logoContainer}>
-                    <Link to='/' className={navbarStyles.loginButton}>
-                    <div className={navbarStyles.logoinner}>
-                        
-                    </div>
-
-                    </Link>
-                </div>
-            </div>
-        </nav>
-    )
+useEffect(() => {
+try {
+  const u = localStorage.getItem("authToken");
+    setLoggedIn(!!u);
+} catch (e) {
+  setLoggedIn(false);
 }
 
-export default Navbar
+const handler = (ev) => {
+  const detailsUser = ev?.detail?.user ?? null;
+  setLoggedIn(!!detailUser);
+};
+window.addEventListener("authChanged", handler);
+
+return () => window.removeEventListener("authChanged", handler);
+}, []);
+
+
+
+ <Link to= "/" className={navbarStyles.logoButton}>
+                   <div className={navbarStyles.logoInner}>
+                   <img
+                 src={
+                logoSrc ||
+                "http://yt3.googleusercontent.com/eD5QJD-9uS--eKQcA-kDTCu1ZO4d7d7BTHLIVH-EySZtDVw3JZcc-bHHDOMvxys92F7rD8Kgfg=s900-c-k-c0x00ffffff-no-rj"
+            }
+            alt="QuizMaster logo"
+            className={navbarStyles.logoImage}
+            />
+           </div>
+        </Link>
