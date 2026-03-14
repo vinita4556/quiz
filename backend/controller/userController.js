@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import User from '../models/userModel.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import validator from "validator";
 
 const TOKEN_EXPIRES_IN = '24h';
 const JWT_SECRET = 'your_jwt_secret_here';
@@ -13,19 +14,19 @@ export async function register(req, res) {
         const { name, email, password } = req.body;
         
         if (!name || !email || !password) {
-            return res.status(4000).json({
+            return res.status(400).json({
                 success: false,
                 message: 'All fields are required.'
             })
         }
         if (!validator.isEmail(email)) {
-             return res.status(4000).json({
+             return res.status(400).json({
                 success: false,
                 message: 'Invalid email'
              })
         }
 
-        const exixts = await User.findOne({ email }).lean();
+        const exists = await User.findOne({ email }).lean();
         if (exists) return res.status(409).json({ success: false, message: 'User already exixts' })
 
 
@@ -54,7 +55,7 @@ export async function register(req, res) {
 
     catch(err) {
         console.error('Register error:', err);
-        return res.ststus(500).json({
+        return res.status(500).json({
             success: false,
             message: 'Server error'
         })
@@ -80,10 +81,29 @@ export async function login(req,res){
     if (!user)  return res.status(401).json({
          success: false,
          message: 'Invalid email or password.'
-    })  
+    });
+    
+    const isMatch = await bcrypt.compare(password, user.password);
+    if(!isMatch) return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password'
+    });
+    const token = jwt.sign({ id: user._id.toString() }, JWT_SECRET, { expiresIn: TOKEN_EXPIRES_IN });
+
+            return res.status(201).json({
+                success: true,
+                message: 'Login successfully!',
+                token,
+                user: { id: user._id.toString(), name: user.name, email: user.email }
+            });
 }
 
-   catch(error) {
+   catch(err) {
+    console.error('Login error:', err);
+    return res.status(500).json({
+            success: false,
+            message: 'Server error'
+        })
 
    }
 } 
