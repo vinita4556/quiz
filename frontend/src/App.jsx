@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";   // path check 
+import Home from "../pages/home.jsx";   // path check 
 
 const App = () => {
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { navbarStyles } from '../assets/dummystyles'
+import { navbarStyles } from '../src/assets/dummystyles'
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {
