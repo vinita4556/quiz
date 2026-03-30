@@ -16,9 +16,14 @@ const Sidebar = () => {
  useEffect(() => {
    const handleResize = () => {
      if (window.innerWidth >=768) setIsSidebarOpen(true);
-     return () => window.removeEventListener("resize", handleResize);
-   }, []);
-   
+     else setIsSidebarOpen(false);
+   };
+   handleResize();
+   window.addEventListener("resize", handleResize);
+   return () => window.removeEventListener("resize", handleResize);
+ }, []);
+     
+    
      
 
  
