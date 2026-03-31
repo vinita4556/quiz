@@ -145,7 +145,39 @@ const handleTechSelect = (techId) => {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
   }, 120);
 };
-      
+
+  const calculator = () => {
+    const questions = getQuestions();
+    let correct = 0;
+    questions.forEach((questions, index) => {
+      if (userAnswer[index] === questions.correctAnswer) {
+        correct++;
+      }
+    });
+    return {
+      correct, 
+      total: questions.length,
+      percentage: questions.length
+        ? Math.round((correct / questions.length) * 100
+            : 0,
+    };
+  };
+
+  
+  const questions = getQuestions();
+  const currentQ = questions[currentQuestions];
+  const score = calculateScore();
+
+  const getPerformanceStatus = () => {
+    if (score.percentage >= 90)
+      return {
+        text: "Outstanding!",
+        color: "bg-gradient-to-r from-amber-200 to-amber-300",
+        icon: <Sparkels className= "text-amber-800" />,
+      };
+    if (score.percentage >= 75)
+      return{
+        
     
     
       
