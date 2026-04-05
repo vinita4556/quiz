@@ -179,19 +179,45 @@ const handleTechSelect = (techId) => {
       return{
         text: "Excellent!",
         color: "bg-gradient-to-r from-blue-200 to-indigo-300",
-        icon: <Trophy className= "text-amber-800" />,
+        icon: <Trophy className= "text-blue-800" />,
       };
     if (score.percentage >= 60)
       return{
         text: "Good Job!",
         color: "bg-gradient-to-r from-green-200 to-teal-300",
-        icon: <Award className= "text-amber-800" />,
+        icon: <Award className= "text-green-800" />,
       };
       return{
         text: "Keep Practising",
         color: "bg-gradient-to-r from-gray-200 to-gray-300",
-        icon: <BookOpen className= "text-amber-800" />,
+        icon: <BookOpen className= "text-gray-800" />,
       };
+  };
+
+  const performance = getPerformanceStatus();
+
+  const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
+
+  const submitResult = () => {
+    
+    const payload = {
+      title: `$(selectedTech.toUpperCase()} - ${
+        selectedLevel.charAt(0).toUpperCase() + selectedLevel.alice(1)
+      } quiz` ,
+      technology: selectedTech,
+      level: selectedLevel,
+     totalQuestions: score.total,
+     correct: score.correct,
+     wrong: score.total - score.correct,
+    };
+
+    useEffect(() => {
+      if (showResults) {
+        submitResults();
+    }
+     // eslint-disable-next-line react-hooks/exhaustive-deeps
+    }, [showResults]);
+      
         
     
     
